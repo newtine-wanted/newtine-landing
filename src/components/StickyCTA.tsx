@@ -14,7 +14,7 @@ export function StickyCTA() {
   return (
     <div className="sticky-cta" hidden={!visible}>
       <StartLink className="button" destination="serviceUrl">
-        바로 체험하기 <span>→</span>
+        바로 체험하기
       </StartLink>
     </div>
   );

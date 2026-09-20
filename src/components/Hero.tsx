@@ -66,8 +66,8 @@ export function Hero() {
         <h2>정치 뉴스, 카드 한 장으로 끝.</h2>
         <p className="hero-description">우리가 사는 도시, 그 안의 정치.<br />일상 속 궁금한 곳에서 이야기를 발견해 보세요.</p>
         <div className="hero-actions">
-          <StartLink className="button" destination="serviceUrl">바로 체험하기 <span>→</span></StartLink>
-          <StartLink className="text-link" destination="signupUrl">가입하기 ↗</StartLink>
+          <StartLink className="button" destination="serviceUrl">바로 체험하기</StartLink>
+          <StartLink className="text-link" destination="signupUrl">가입하기</StartLink>
         </div>
       </div>
       <div className="city-scene" aria-label="우리 일상과 연결된 정치 이야기">
@@ -78,13 +78,12 @@ export function Hero() {
             onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setHovered(null); }}>
             <button ref={(node) => { triggers.current[index] = node; }} className="city-marker" aria-label={`${place.name}: ${place.question}`} aria-expanded={selected === index} aria-controls={`city-story-${index}`}
               onFocus={() => setHovered(index)} onClick={() => { setSelected(selected === index ? null : index); setHovered(null); }}><span aria-hidden="true">+</span></button>
-            <span className="city-place-name" aria-hidden="true">{place.name}</span>
             <div id={`city-story-${index}`} className={`city-story${selected === index ? " is-expanded" : ""}`} aria-hidden={active !== index} inert={active !== index}>
               <div className="city-story-meta"><span>{String(index + 1).padStart(2, "0")} / {place.tag}</span>{selected === index && <button aria-label="이야기 닫기" onClick={() => { triggers.current[index]?.focus(); setSelected(null); setHovered(null); }}>×</button>}</div>
               <h3>{place.question}</h3>
               <div className="city-story-details" inert={selected !== index} aria-hidden={selected !== index}><div className="city-story-details-inner">
                 <div className="city-story-lines">{place.lines.map((line, i) => <p key={line}><span>0{i + 1}</span>{line}</p>)}</div>
-                <div className="city-story-footer"><StartLink destination="serviceUrl">바로 체험하기 ↗</StartLink></div>
+                <div className="city-story-footer"><StartLink destination="serviceUrl">바로 체험하기</StartLink></div>
               </div></div>
               <p className="city-story-hint" aria-hidden={selected === index}>눌러서 이야기 펼치기 <span>↗</span></p>
             </div>
