@@ -1,3 +1,4 @@
+import { useScrollReveal } from "./useScrollReveal";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { Why } from "./components/Why";
@@ -10,6 +11,7 @@ import { Closing } from "./components/Closing";
 import { Footer } from "./components/Footer";
 import { StickyCTA } from "./components/StickyCTA";
 export default function App() {
+  useScrollReveal();
   return (
     <>
       <Header />

@@ -12,7 +12,7 @@ export function StickyCTA() {
     return () => observer.disconnect();
   }, []);
   return (
-    <div className="sticky-cta" hidden={!visible}>
+    <div className={`sticky-cta${visible ? " is-visible" : ""}`} aria-hidden={!visible} inert={!visible}>
       <StartLink className="button" destination="serviceUrl">
         바로 체험하기
       </StartLink>
