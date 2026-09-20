@@ -44,7 +44,7 @@ npm run preview
 
 프로덕션: https://newtine-landing.vercel.app
 
-Vercel 프로젝트: `vdnuits-projects/newtine-landing`. CLI로 최초 배포했습니다. 소스 저장소: https://github.com/newtine-wanted/newtine-landing (비공개). 이후 이 폴더에서 `npx vercel deploy --prod`로 재배포할 수 있습니다. 현재 배포는 CLI 방식입니다. Git 자동 배포는 Vercel의 Git 연결 설정이 필요합니다.
+Vercel 프로젝트: `vdnuits-projects/newtine-landing`. CLI로 최초 배포했습니다. 소스 저장소: https://github.com/newtine-wanted/newtine-landing (공개). 이후 이 폴더에서 `npx vercel deploy --prod`로 재배포할 수 있습니다. `main` 브랜치에 푸시하면 Vercel이 프로덕션으로 자동 배포합니다. GitHub 저장소와 Vercel 프로젝트의 Git 연결을 완료했습니다.
 
 ## 서비스 연결
 
