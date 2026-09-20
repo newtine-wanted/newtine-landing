@@ -149,7 +149,7 @@ main > section:not(#hero) { scroll-margin-top: 16px; }
 .onboarding-view > p { font-size:10px; color:#888; margin:9px 0 18px; }
 .app-topic-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
 .app-topic-grid button { display:flex; align-items:center; gap:7px; text-align:left; min-height:52px; padding:8px; border:1px solid #ddd; font-size:11px; transition:background .35s,border-color .35s; }
-.app-topic-grid button > span { font:20px var(--english); width:20px; color:#888; }
+.app-topic-grid button > span { display:grid; place-items:center; flex-shrink:0; font:20px var(--english); width:20px; color:#888; }
 .app-topic-grid button small { margin-left:auto; color:#aaa; }
 .app-topic-grid button.selected { border-color:#111; background:#f1f1f1; }
 .app-topic-grid button.selected small { color:var(--green); }
@@ -278,7 +278,7 @@ footer .footer-top a:hover { opacity:.6; }
   .tour-display-footer { flex-direction:column; align-items:flex-start; gap:4px; }
 }
 @media (max-width:760px) {
-  .feature-intro { grid-template-columns:28px minmax(0,1fr); gap:10px; }
+  .feature-intro { grid-template-columns:36px minmax(0,1fr); gap:18px; }
   .section { padding-bottom:68px; }
   .why-grid .big-number { font-size:32px; margin:0; }
   .section-heading { padding-top:22px; margin-bottom:32px; }
