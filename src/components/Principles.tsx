@@ -4,33 +4,24 @@ export function Principles() {
       <div className="container">
         <div className="section-heading">
           <h2>Our Principles</h2>
-          <p>편들지 않습니다. 정리만 합니다.</p>
+          <p>뉴틴의 네 가지 원칙</p>
         </div>
         <div className="principle-grid">
           <article>
-            <h3>No Colors</h3>
-            <h4>진영 색 없음</h4>
-            <p>
-              빨강·파랑을 쓰지 않는 그레이스케일 UI. 색으로 편을 나누지 않아요.
-            </p>
+            <h3>설명은 핵심부터</h3>
+            <p>무슨 일이 있었는지 먼저 알려드려요. 어려운 용어는 쉬운 말로 풀어 설명해요.</p>
           </article>
           <article>
-            <h3>Sources First</h3>
-            <h4>출처 명시</h4>
-            <p>
-              모든 카드에 원문 기사와 언론사 수를 표시해요. 요약은 AI, 판단은
-              당신.
-            </p>
+            <h3>요약에는 근거를</h3>
+            <p>요약의 바탕이 된 기사를 함께 보여줘요. 궁금한 내용은 원문에서 확인할 수 있어요.</p>
           </article>
           <article>
-            <h3>12 Policy Areas</h3>
-            <h4>정책 영역 12종</h4>
-            <p>정당·인물이 아닌 정책 영역 기준으로 이슈를 분류해요.</p>
+            <h3>정치를 일상 가까이</h3>
+            <p>주거, 일자리, 교육처럼 내 삶과 연결된 정책을 살펴봐요. 누구에게 어떤 변화가 생기는지 설명해요.</p>
           </article>
           <article>
-            <h3>Your Data</h3>
-            <h4>내 데이터는 내 것</h4>
-            <p>관심 기록은 최근 7일만 분석하고 언제든 초기화할 수 있어요.</p>
+            <h3>전달은 과장 없이</h3>
+            <p>불안을 부추기거나 누군가를 비방하는 표현을 쓰지 않아요. 확인된 내용을 차분하게 전해요.</p>
           </article>
         </div>
       </div>

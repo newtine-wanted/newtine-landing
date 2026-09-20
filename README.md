@@ -31,7 +31,7 @@ npm run preview
 - `public/assets/`: 원본 로고와 로컬 서체
 - `vite.config.ts`, `tsconfig.json`: Vite 및 strict TypeScript 설정
 
-카드 선택·관심 표시·메뉴·모달은 React 상태로 관리합니다. 화면 관찰 이벤트는 컴포넌트 해제 시 정리합니다. FAQ는 기본 HTML details 요소입니다.
+카드 선택·관심 표시·메뉴·FAQ는 React 상태로 관리합니다. FAQ는 접근성 속성을 갖춘 버튼과 펼침 애니메이션으로 구성됩니다. 화면 관찰 이벤트는 컴포넌트 해제 시 정리합니다.
 
 ## Vercel
 
@@ -59,7 +59,18 @@ Vercel 프로젝트: `vdnuits-projects/newtine-landing`. CLI로 최초 배포했
 
 ## 디자인과 동작
 
-Lusion 참고로 추가했던 입자 구·스크롤 강조·기울기·스와이프·자석 버튼은 제거하고 이전 Figma 기반 디자인을 복원했습니다.
-기존 카드 5개 순환, 관심 3개 제한·취소, 상세 모달, FAQ, 모바일 메뉴 및 하단 CTA는 유지합니다.
+첫 화면의 도시 일러스트와 포인트 카드는 유지하고, 아래 섹션에 순차 등장과 버튼 반응을 적용했습니다.
 
-회색 이미지 영역의 기능 미리보기는 실제 앱 캡처가 아닌 HTML/CSS 예시입니다. 원본 Figma 로고와 기존 프로젝트의 NeoHyundai 서체를 재사용합니다. Google Fonts의 Barlow Semi Condensed 라이선스는 `public/assets/fonts/OFL.txt`에 있습니다.
+- Features: 카드 넘김·관심 주제·주간 차트를 HTML/CSS/SVG로 렌더링합니다. 영상 파일 없이 자동 재생과 직접 조작이 가능합니다.
+- How it works: 관심 설정 → 피드 → 상세 → 보고서로 전환되는 휴대폰 목업입니다. 주제 선택·좌우 스와이프·출처 펼침·주간 전환을 자동 시연합니다. 직접 조작하면 해당 단계의 자동 시연을 멈춥니다. 실제 API와 연결하지 않은 예시 화면입니다.
+- 자동 재생은 화면 밖, 비활성 브라우저 탭 또는 모션 감소 설정에서 멈춥니다. Features 카드·관심 주제를 직접 조작하면 해당 데모가 멈추며, 주간 보고서는 2.6초, How it works는 4초 간격의 자동 전환을 유지합니다. Features 카드 전환 간격은 3.2초입니다.
+- 단계 탭은 방향키와 Home/End로 이동할 수 있습니다.
+
+### 모션 조정 위치
+
+- `src/styles.css`의 `--motion-slide-duration`, `--motion-reveal-duration`, `--motion-reveal-distance`: 내비게이션·모바일 CTA·스크롤 등장 속도와 거리
+- `src/useScrollReveal.ts`: 등장 대상, 순서별 지연, 표시 시점
+- `src/components/Experience.css`: 에셋, 목업, 버튼, FAQ의 세부 움직임과 1100/900/760/360px 반응형 스타일
+- `src/components/usePreview.ts`: 자동 재생 공통 동작. 각 컴포넌트의 `usePreview` 두 번째 인수는 전환 간격(ms)입니다. 목업 간격 변경 시 CSS의 `tour-timer`도 함께 조정하세요.
+
+원본 Figma 로고와 기존 프로젝트의 NeoHyundai 서체를 재사용합니다. Barlow Semi Condensed 라이선스는 `public/assets/fonts/OFL.txt`에 있습니다.
