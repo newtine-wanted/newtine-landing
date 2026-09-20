@@ -2,7 +2,7 @@ export function Why() {
   return (
     <section className="section container" id="why">
       <div className="section-heading">
-        <h2>Why NEWTINE</h2>
+        <h2>Why We Tune Out</h2>
         <p>2030 세대가 정치 뉴스를 멀리하는 세 가지 이유</p>
       </div>
       <div className="why-grid">
