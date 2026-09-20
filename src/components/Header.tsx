@@ -57,7 +57,7 @@ export function Header() {
       </a>
       <div className="notice">
         <div className="container">
-          <span>비회원도 카드 5장까지 <StartLink className="notice-trial-link" destination="serviceUrl">바로 체험</StartLink>할 수 있어요</span>
+          <span>회원가입 없이도 <StartLink className="notice-trial-link" destination="serviceUrl">바로 체험</StartLink>할 수 있어요</span>
         </div>
       </div>
       <header ref={header} className={`navigation${hidden && !menuOpen ? " is-hidden" : ""}${scrolled ? " is-scrolled" : ""}${menuOpen ? " is-menu-open" : ""}`} onFocusCapture={() => setHidden(false)}>
