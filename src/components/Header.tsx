@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StartLink } from "./StartLink";
 const links = [
   ["why", "Why"],
@@ -8,6 +8,35 @@ const links = [
 ] as const;
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const header = useRef<HTMLElement>(null);
+  useEffect(() => {
+    let lastY = Math.max(0, window.scrollY);
+    let distance = 0;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const y = Math.max(0, Math.min(window.scrollY, document.documentElement.scrollHeight - window.innerHeight));
+      const delta = y - lastY;
+      lastY = y;
+      setScrolled(y > 24);
+      const keyboardFocus = header.current?.contains(document.activeElement) && document.activeElement?.matches(":focus-visible");
+      if (y < 80 || menuOpen || keyboardFocus) {
+        setHidden(false);
+        distance = 0;
+        return;
+      }
+      if (Math.sign(delta) !== Math.sign(distance)) distance = 0;
+      distance += delta;
+      if (distance > 14) { setHidden(true); distance = 0; }
+      if (distance < -8) { setHidden(false); distance = 0; }
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
+  }, [menuOpen]);
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
@@ -28,13 +57,10 @@ export function Header() {
       </a>
       <div className="notice">
         <div className="container">
-          <span>비회원도 카드 5장까지 바로 체험할 수 있어요</span>
-          <StartLink className="english" destination="serviceUrl">
-            바로 체험하기 →
-          </StartLink>
+          <span>비회원도 카드 5장까지 <StartLink className="notice-trial-link" destination="serviceUrl">바로 체험</StartLink>할 수 있어요</span>
         </div>
       </div>
-      <header className="navigation">
+      <header ref={header} className={`navigation${hidden && !menuOpen ? " is-hidden" : ""}${scrolled ? " is-scrolled" : ""}${menuOpen ? " is-menu-open" : ""}`} onFocusCapture={() => setHidden(false)}>
         <div className="container nav-inner">
           <a href="#" aria-label="뉴틴 홈">
             <img
@@ -53,7 +79,7 @@ export function Header() {
             ))}
           </nav>
           <StartLink className="button button-outline nav-cta" destination="signupUrl">
-            가입하기 <span>→</span>
+            가입하기
           </StartLink>
           <button
             className="menu-toggle"
