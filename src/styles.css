@@ -117,6 +117,8 @@ img {
   height: 30px;
 }
 .notice {
+  position: relative;
+  z-index: 21;
   background: #000;
   color: #fff;
   font-size: 13px;
@@ -134,6 +136,9 @@ img {
   letter-spacing: 0.06em;
 }
 .navigation {
+  position: relative;
+  z-index: 20;
+  background: #fff;
   border-bottom: 1px solid #000;
 }
 .nav-inner {
@@ -1411,3 +1416,22 @@ dialog .button {
 .button.button-outline { background: #fff; color: #000; }
 .button.button-outline:hover { background: #f5f5f5; }
 a[aria-disabled="true"] { cursor: default; }
+
+/* Keep navigation on one line; collapse before its contents become crowded. */
+.nav-inner { gap: clamp(20px, 3vw, 48px); }
+.nav-inner > a { flex-shrink: 0; white-space: nowrap; }
+.nav-inner nav { gap: clamp(18px, 2.3vw, 32px); white-space: nowrap; }
+.mobile-nav { display: none; }
+.notice a { flex-shrink: 0; white-space: nowrap; }
+@media (max-width: 900px) {
+  .nav-inner { height: 60px; gap: 16px; }
+  .nav-inner nav, .nav-inner .nav-cta { display: none; }
+  .menu-toggle { display: grid; place-items: center; margin-left: auto; width: 44px; height: 44px; font-size: 26px; flex-shrink: 0; }
+  .mobile-nav:not([hidden]) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; padding: 8px 20px 16px; border-top: 1px solid #eee; font: 600 16px var(--english); }
+  .mobile-nav a { padding: 14px 0; white-space: nowrap; }
+}
+@media (max-width: 380px) {
+  .notice .container { gap: 8px; }
+  .notice .container > span { font-size: 9px; }
+  .notice a { font-size: 9px; }
+}
