@@ -5,7 +5,7 @@
 .city-period { color: var(--green); }
 .hero.city-hero h2 { font-size: clamp(21px, 2vw, 28px); margin-bottom: 15px; }
 .city-hero .hero-description { font-size: 15px; line-height: 1.8; color: #666; }
-.city-hero .hero-actions { gap: 22px; margin-top: 24px; flex-wrap: wrap; }
+.city-hero .hero-actions { gap: 16px; margin-top: 24px; flex-wrap: wrap; }
 .city-hero .hero-actions .button { min-height: 48px; }
 .city-hero .hero-actions .text-link { color: #222; font-size: 13px; }
 .city-scene { position: absolute; bottom: clamp(56px, 5vw, 90px); left: 0; width: 100%; aspect-ratio: 1672 / 941; }
@@ -45,7 +45,7 @@
   .hero.city-hero h2 { font-size: 22px; margin-bottom: 12px; }
   .city-hero .hero-description { font-size: 13px; }
   .city-hero .hero-description br { display: block; }
-  .city-hero .hero-actions { flex-direction: row; align-items: center; gap: 16px; margin-top: 20px; }
+  .city-hero .hero-actions { flex-direction: row; align-items: center; gap: 12px; margin-top: 20px; }
   .city-hero .hero-actions .button { width: auto; font-size: 12px; padding-inline: 18px; }
   .city-hero .hero-actions .text-link { align-self: auto; font-size: 12px; }
   .city-scene { position: relative; bottom: auto; left: -95%; width: 195%; margin-top: -112px; }
@@ -131,4 +131,16 @@
   .city-story-meta { font-size: 11px; }
   .city-story-lines p { font-size: 13px; }
   .city-story-hint, .city-story-footer a { font-size: 12px; }
+}
+
+/* Match the two hero actions while keeping signup white. */
+.city-hero .hero-actions { display:inline-grid; grid-template-columns:repeat(2, minmax(0, 1fr)); max-width:100%; }
+.city-hero .hero-actions .button { min-height:44px; padding:10px 24px; }
+.city-hero .hero-actions .hero-signup { background:#fff; color:#000; border-color:#000; }
+.city-hero .hero-actions .hero-signup:hover { background:#f5f5f5; border-color:#000; }
+@media (max-width:760px) {
+  .city-hero .hero-actions .button { min-height:42px; padding:9px 14px; }
+}
+@media (max-width:360px) {
+  .city-hero .hero-actions .button { padding-inline:10px; }
 }

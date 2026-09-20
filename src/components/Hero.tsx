@@ -67,7 +67,7 @@ export function Hero() {
         <p className="hero-description">우리가 사는 도시, 그 안의 정치.<br />일상 속 궁금한 곳에서 이야기를 발견해 보세요.</p>
         <div className="hero-actions">
           <StartLink className="button" destination="serviceUrl">바로 체험하기</StartLink>
-          <StartLink className="text-link" destination="signupUrl">가입하기</StartLink>
+          <StartLink className="button hero-signup" destination="signupUrl">가입하기</StartLink>
         </div>
       </div>
       <div className="city-scene" aria-label="우리 일상과 연결된 정치 이야기">
