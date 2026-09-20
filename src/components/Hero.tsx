@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { StartLink } from "./StartLink";
 import "./Hero.css";
 
@@ -11,12 +11,43 @@ const places = [
 export function Hero() {
   const [hovered, setHovered] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  const scene = useRef<HTMLDivElement>(null);
   const triggers = useRef<(HTMLButtonElement | null)[]>([]);
   const active = selected ?? hovered;
+  useLayoutEffect(() => {
+    if (active === null) return;
+    const card = document.getElementById(`city-story-${active}`);
+    const marker = triggers.current[active];
+    const hero = document.getElementById("hero");
+    if (!card || !marker || !hero) return;
+    const positionCard = () => {
+      const heroRect = hero.getBoundingClientRect();
+      const navBottom = document.querySelector(".navigation")?.getBoundingClientRect().bottom ?? 0;
+      const top = Math.max(12, heroRect.top + 8, navBottom + 8);
+      const bottom = Math.min(window.innerHeight - 12, heroRect.bottom - 8);
+      const available = Math.max(80, bottom - top);
+      card.style.maxHeight = `${available}px`;
+      card.style.overflowY = card.scrollHeight > available + 1 ? "auto" : "visible";
+      const height = card.getBoundingClientRect().height;
+      const preferredTop = marker.getBoundingClientRect().top - 12 - height;
+      const fittedTop = Math.max(top, Math.min(preferredTop, bottom - height));
+      const shift = fittedTop - preferredTop;
+      card.style.setProperty("--story-shift", `${shift}px`);
+      card.toggleAttribute("data-shifted", Math.abs(shift) > 1);
+    };
+    positionCard();
+    const observer = new ResizeObserver(positionCard);
+    observer.observe(card);
+    window.addEventListener("scroll", positionCard, { passive: true });
+    window.addEventListener("resize", positionCard);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", positionCard);
+      window.removeEventListener("resize", positionCard);
+    };
+  }, [active, selected]);
   useEffect(() => {
     const dismiss = (event: PointerEvent) => {
-      if (!scene.current?.contains(event.target as Node)) { setSelected(null); setHovered(null); }
+      if (!(event.target instanceof Element) || !event.target.closest(".city-place")) { setSelected(null); setHovered(null); }
     };
     const escape = (event: KeyboardEvent) => {
       if (event.key === "Escape") { setSelected(null); setHovered(null); }
@@ -31,7 +62,6 @@ export function Hero() {
   return (
     <section className="hero city-hero" id="hero" aria-labelledby="hero-title">
       <div className="city-copy">
-        <div className="city-eyebrow"><span className="city-live-dot" /> DAILY POLITICS, REAL LIFE</div>
         <h1 id="hero-title">Politics,<br />One Card<br />A Day<span className="city-period">.</span></h1>
         <h2>정치 뉴스, 카드 한 장으로 끝.</h2>
         <p className="hero-description">우리가 사는 도시, 그 안의 정치.<br />일상 속 궁금한 곳에서 이야기를 발견해 보세요.</p>
@@ -40,7 +70,7 @@ export function Hero() {
           <StartLink className="text-link" destination="signupUrl">가입하기 ↗</StartLink>
         </div>
       </div>
-      <div className="city-scene" ref={scene} aria-label="우리 일상과 연결된 정치 이야기">
+      <div className="city-scene" aria-label="우리 일상과 연결된 정치 이야기">
         <img className="city-art" src="/assets/city-line-art.png" alt="국회의사당, 아파트, 지하철과 동네 상점이 한강을 따라 이어진 한국 도시 선화" width="1672" height="941" fetchPriority="high" />
         {places.map((place, index) => (
           <div key={place.tag} className={`city-place place-${index}${active === index ? " is-active" : ""}`} style={{ "--x": `${place.x}%`, "--y": `${place.y}%` } as CSSProperties}
@@ -49,18 +79,18 @@ export function Hero() {
             <button ref={(node) => { triggers.current[index] = node; }} className="city-marker" aria-label={`${place.name}: ${place.question}`} aria-expanded={selected === index} aria-controls={`city-story-${index}`}
               onFocus={() => setHovered(index)} onClick={() => { setSelected(selected === index ? null : index); setHovered(null); }}><span aria-hidden="true">+</span></button>
             <span className="city-place-name" aria-hidden="true">{place.name}</span>
-            <div id={`city-story-${index}`} className="city-story" hidden={active !== index}>
+            <div id={`city-story-${index}`} className={`city-story${selected === index ? " is-expanded" : ""}`} aria-hidden={active !== index} inert={active !== index}>
               <div className="city-story-meta"><span>{String(index + 1).padStart(2, "0")} / {place.tag}</span>{selected === index && <button aria-label="이야기 닫기" onClick={() => { triggers.current[index]?.focus(); setSelected(null); setHovered(null); }}>×</button>}</div>
               <h3>{place.question}</h3>
-              {selected === index ? <>
+              <div className="city-story-details" inert={selected !== index} aria-hidden={selected !== index}><div className="city-story-details-inner">
                 <div className="city-story-lines">{place.lines.map((line, i) => <p key={line}><span>0{i + 1}</span>{line}</p>)}</div>
-                <div className="city-story-footer"><span>서비스 소개용 예시</span><StartLink destination="serviceUrl">바로 체험하기 ↗</StartLink></div>
-              </> : <p className="city-story-hint">눌러서 이야기 펼치기 <span>↗</span></p>}
+                <div className="city-story-footer"><StartLink destination="serviceUrl">바로 체험하기 ↗</StartLink></div>
+              </div></div>
+              <p className="city-story-hint" aria-hidden={selected === index}>눌러서 이야기 펼치기 <span>↗</span></p>
             </div>
           </div>
         ))}
       </div>
-      <div className="city-caption"><span><span className="city-caption-plus">+</span> 도시의 포인트를 눌러보세요</span><a href="#why">SCROLL TO EXPLORE <span>↓</span></a></div>
     </section>
   );
 }
